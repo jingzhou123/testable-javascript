@@ -1,0 +1,24 @@
+{
+  "name": "testable-javascript",
+  "version": "1.0.0",
+  "description": "a collection of testable js",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jingzhou123/testable-javascript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jingzhou123/testable-javascript/issues"
+  },
+  "homepage": "https://github.com/jingzhou123/testable-javascript#readme",
+  "devDependencies": {
+    "browser-sync": "^2.11.1",
+    "gulp": "^3.9.0",
+    "gulp-watch": "^4.3.5"
+  }
+}
