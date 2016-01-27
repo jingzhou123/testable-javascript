@@ -1,4 +1,5 @@
 var browserSync = require('browser-sync').create();
+var del = require('del');
 var gulp        = require('gulp');
 var gutil = require('gulp-util'); var newer = require('gulp-newer');
 var runSequence = require('run-sequence');
@@ -7,7 +8,12 @@ var webpack = require('webpack');
 
 var webpackConfig = require('./webpack.config');
 var devCompiler = webpack(webpackConfig);
-var htmlTask;
+var htmlTask = function () {
+  return gulp.src('src/**/*.html')
+  .pipe(newer('build'))
+  .pipe(gulp.dest('build'))
+  .pipe(browserSync.stream());
+};
 
 gulp.task('browserSync', function() {
   browserSync.init({
@@ -17,12 +23,9 @@ gulp.task('browserSync', function() {
   });
 });
 
-htmlTask = function () {
-  return gulp.src('src/**/*.html')
-  .pipe(newer('build'))
-  .pipe(gulp.dest('build'))
-  .pipe(browserSync.stream());
-};
+gulp.task('clean', function () {
+  return del('build');
+});
 
 gulp.task('html', htmlTask);
 
@@ -62,7 +65,7 @@ gulp.task('webpack:watch', function(callback) {
 gulp.task('watch', ['watch:html', 'webpack:watch']);
 
 gulp.task('serve', function (done) {
-  runSequence('html', 'browserSync', 'watch', done);
+  runSequence('clean', 'html', 'browserSync', 'watch', done);
 });
 
 gulp.task('default', ['serve']);
