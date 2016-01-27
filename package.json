@@ -19,6 +19,9 @@
   "devDependencies": {
     "browser-sync": "^2.11.1",
     "gulp": "^3.9.0",
-    "gulp-watch": "^4.3.5"
+    "gulp-util": "^3.0.7",
+    "gulp-watch": "^4.3.5",
+    "run-sequence": "^1.1.5",
+    "webpack": "^1.12.12"
   }
 }
