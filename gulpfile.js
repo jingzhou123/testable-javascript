@@ -1,19 +1,33 @@
 var browserSync = require('browser-sync').create();
-var devCompiler;
 var gulp        = require('gulp');
-var gutil = require("gulp-util");
+var gutil = require('gulp-util'); var newer = require('gulp-newer');
 var runSequence = require('run-sequence');
+var watch = require('gulp-watch');
 var webpack = require('webpack');
-var webpackConfig = require('./webpack.config');
 
-devCompiler = webpack(webpackConfig);
+var webpackConfig = require('./webpack.config');
+var devCompiler = webpack(webpackConfig);
+var htmlTask;
 
 gulp.task('browserSync', function() {
   browserSync.init({
     server: {
-      baseDir: "./"
+      baseDir: "build"
     }
   });
+});
+
+htmlTask = function () {
+  return gulp.src('src/**/*.html')
+  .pipe(newer('build'))
+  .pipe(gulp.dest('build'))
+  .pipe(browserSync.stream());
+};
+
+gulp.task('html', htmlTask);
+
+gulp.task('watch:html', function () {
+  watch('src/**/*.html', htmlTask);
 });
 
 gulp.task("webpack:build-dev", function(callback) {
@@ -45,8 +59,10 @@ gulp.task('webpack:watch', function(callback) {
   });
 });
 
+gulp.task('watch', ['watch:html', 'webpack:watch']);
+
 gulp.task('serve', function (done) {
-  runSequence('webpack:build-dev', 'browserSync', 'webpack:watch', done);
+  runSequence('html', 'browserSync', 'watch', done);
 });
 
 gulp.task('default', ['serve']);
