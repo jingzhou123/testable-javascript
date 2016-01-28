@@ -3,7 +3,7 @@ module.exports = {
     'button': './src/button',
     'modal': './src/modal',
     'select_control': './src/select_control',
-    'text_input': './src/text_input'
+    'text_input': './src/text_input',
   },
   output: {
     filename: '[name].js',
@@ -11,13 +11,10 @@ module.exports = {
     path: __dirname + '/build',
     publicPath: '/'
   },
-  resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
-  },
   devtool: 'source-map',
   module: {
     loaders: [
-      { test: /\.ts$/, loader: 'ts-loader' }
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel?presets[]=es2015' }
     ]
   }
 };
